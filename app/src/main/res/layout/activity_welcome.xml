@@ -59,7 +59,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3">
 
         <Button
-            android:id="@+id/b_back"
+            android:id="@+id/b_register"
             style="@style/Widget.AppCompat.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
             android:textSize="18sp" />
 
         <Button
-            android:id="@+id/b_back"
+            android:id="@+id/b_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"

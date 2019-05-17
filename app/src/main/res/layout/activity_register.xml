@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="#00E6E2E2"
-    tools:context=".MainActivity">
+    tools:context=".RegisterActivity">
+
 
     <TextView
         android:id="@+id/textView9"
@@ -21,14 +22,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9">
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <TextView
             android:id="@+id/textView2"
@@ -135,6 +133,7 @@
             android:textSize="20sp" />
 
         <RadioGroup
+            android:id="@+id/rdb_senior_carer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -155,52 +154,52 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Carer" />
+
         </RadioGroup>
 
+        <LinearLayout
+            android:layout_width="395dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/b_back"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:backgroundTint="#0534EE"
+                android:elevation="25dp"
+                android:onClick="BackClick"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:text="Back"
+                android:textColor="#FFF7F7"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/b_register"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:backgroundTint="#8A8CF5"
+                android:elevation="25dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:text="Log in"
+                android:textSize="18sp" />
+
+        </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="395dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-        <Button
-            android:id="@+id/b_back"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_weight="1"
-            android:backgroundTint="#0534EE"
-            android:elevation="25dp"
-            android:onClick="BackClick"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:text="Back"
-            android:textColor="#FFF7F7"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/b_back"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_weight="1"
-            android:backgroundTint="#8A8CF5"
-            android:elevation="25dp"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:text="Log in"
-            android:textSize="18sp" />
-
-    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
