@@ -1,4 +1,4 @@
-package com.example.wholoose.seniorita;
+package com.example.wholoose.seniorzy;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.wholoose.seniorita", appContext.getPackageName());
+        assertEquals("com.example.wholoose.seniorzy", appContext.getPackageName());
     }
 }

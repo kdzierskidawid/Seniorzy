@@ -1,4 +1,4 @@
-package com.example.wholoose.seniorita;
+package com.example.wholoose.seniorzy;
 
 import org.junit.Test;
 

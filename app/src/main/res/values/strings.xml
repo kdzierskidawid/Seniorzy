@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">Seniorita</string>
+    <string name="app_name">Seniorzy</string>
+    <string name="localization_off_alert">Nie zezwolono na lokalizację. Aplikacja może nie działać poprawnie!</string>
+    <string name="localization_no_permission_alert">Nie zezwolono na dostęp do informacji o lokalizacji tego urządzenia.
+        Aplikacja może nie działać poprawnie!</string>
 </resources>

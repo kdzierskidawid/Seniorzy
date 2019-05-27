@@ -1,42 +1,42 @@
 {
   "project_info": {
-    "project_number": "890415972439",
-    "firebase_url": "https://senior-w-rodzinie.firebaseio.com",
-    "project_id": "senior-w-rodzinie",
-    "storage_bucket": "senior-w-rodzinie.appspot.com"
+    "project_number": "605268054562",
+    "firebase_url": "https://seniorzyapp.firebaseio.com",
+    "project_id": "seniorzyapp",
+    "storage_bucket": "seniorzyapp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:890415972439:android:584a2c0f789f6d34",
+        "mobilesdk_app_id": "1:605268054562:android:492d5a1346c6666d",
         "android_client_info": {
-          "package_name": "com.example.wholoose.seniorita"
+          "package_name": "com.example.wholoose.seniorzy"
         }
       },
       "oauth_client": [
         {
-          "client_id": "890415972439-tadpvve2p5iudqguakb74bnkpvk4pu2c.apps.googleusercontent.com",
+          "client_id": "605268054562-ihkmpqu5dfp5dc10e6b1ikrqhen54270.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.wholoose.seniorita",
+            "package_name": "com.example.wholoose.seniorzy",
             "certificate_hash": "39586984e21d2c6ea4b917c702165488a472f807"
           }
         },
         {
-          "client_id": "890415972439-1g6l8p1ptk77dh1ob8jgtq4oj93bg0er.apps.googleusercontent.com",
+          "client_id": "605268054562-3hc85kimmpeqpv0gd8gdsp320k4vou1h.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBLhv2Lljx6-K6pWOWC8nOC6e4mK2wZYOk"
+          "current_key": "AIzaSyB16YHR1a9B0rxRtQ0N806LPb9oRCMHSCc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "890415972439-1g6l8p1ptk77dh1ob8jgtq4oj93bg0er.apps.googleusercontent.com",
+              "client_id": "605268054562-3hc85kimmpeqpv0gd8gdsp320k4vou1h.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
