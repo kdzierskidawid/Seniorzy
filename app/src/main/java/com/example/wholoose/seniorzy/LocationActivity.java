@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -58,13 +60,17 @@ public class LocationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_localisation);
 
         FirebaseAuth firebaseAuth;
-
         firebaseAuth = FirebaseAuth.getInstance();
-        //if the user is not logged in
-        //that means current user will return null
-
         FirebaseUser user = firebaseAuth.getCurrentUser();
         Toast.makeText(LocationActivity.this, "Hello "+ user.getEmail(), Toast.LENGTH_LONG).show();
+
+        if(isOnline()){
+            Toast.makeText(LocationActivity.this, "internet connection", Toast.LENGTH_LONG).show();
+        }
+        else {
+            Toast.makeText(LocationActivity.this, "no internet connection", Toast.LENGTH_LONG).show();
+
+        }
 
         longitudeTextView = findViewById(R.id.textViewLongitudeValue);
         latitudeTextView =  findViewById(R.id.textViewLatitudeValue);
@@ -125,5 +131,12 @@ public class LocationActivity extends AppCompatActivity {
                 });
         final AlertDialog alert=builder.create();
         alert.show();
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }
