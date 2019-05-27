@@ -18,12 +18,17 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.text.DecimalFormat;
 
 public class LocationActivity extends AppCompatActivity {
 
     private TextView longitudeTextView;//dlugosc
     private TextView latitudeTextView;//szergokosc
+    private TextView pleaseWaitTextView;
     private LocationManager locationManager;
     private LocationListener locationListener;
     private final String LOCALIZATION_PERMISSION=Manifest.permission.ACCESS_FINE_LOCATION;
@@ -52,8 +57,18 @@ public class LocationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_localisation);
 
-        longitudeTextView = (TextView) findViewById(R.id.textViewLongitudeValue);
-        latitudeTextView = (TextView) findViewById(R.id.textViewLatitudeValue);
+        FirebaseAuth firebaseAuth;
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        //if the user is not logged in
+        //that means current user will return null
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        Toast.makeText(LocationActivity.this, "Hello "+ user.getEmail(), Toast.LENGTH_LONG).show();
+
+        longitudeTextView = findViewById(R.id.textViewLongitudeValue);
+        latitudeTextView =  findViewById(R.id.textViewLatitudeValue);
+        pleaseWaitTextView = findViewById(R.id.textViewLocationInfo);
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
@@ -65,6 +80,7 @@ public class LocationActivity extends AppCompatActivity {
                 DecimalFormat format=new DecimalFormat("#.####");
                 longitudeTextView.setText(String.valueOf(format.format(location.getLongitude())));
                 latitudeTextView.setText(String.valueOf(format.format(location.getLatitude())));
+                pleaseWaitTextView.setText("");
             }
 
             @Override
@@ -87,7 +103,7 @@ public class LocationActivity extends AppCompatActivity {
 
         //Location lastKnownLocation=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);//generates always null
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 1, locationListener);
     }
 
     private void turnOnLocalizationAlert(){
