@@ -116,7 +116,7 @@
             android:layout_weight="1"
             android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
             android:ems="10"
-            android:inputType="textEmailAddress"
+            android:inputType="textEmailAddress|phone"
             android:textSize="20sp" />
 
         <TextView
