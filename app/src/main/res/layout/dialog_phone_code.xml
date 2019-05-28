@@ -12,7 +12,9 @@
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/ic_check_box_black_24dp"
         android:fontFamily="casual"
-        android:text="Enter the confirmation code we've you"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:text="Enter the confirmation code we've sent you"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText

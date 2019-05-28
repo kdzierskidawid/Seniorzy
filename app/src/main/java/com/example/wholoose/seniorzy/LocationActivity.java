@@ -64,7 +64,7 @@ public class LocationActivity extends AppCompatActivity {
         //that means current user will return null
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        Toast.makeText(LocationActivity.this, "Hello "+ user.getEmail(), Toast.LENGTH_LONG).show();
+        Toast.makeText(LocationActivity.this, "Well hello there!", Toast.LENGTH_LONG).show();
 
         longitudeTextView = findViewById(R.id.textViewLongitudeValue);
         latitudeTextView =  findViewById(R.id.textViewLatitudeValue);
