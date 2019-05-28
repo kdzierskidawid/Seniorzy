@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         if(firebaseAuth.getCurrentUser() != null) {
             // Jesli jest juz zalogowany to otwieramy glowne menu apki
             finish();
-            startActivity(new Intent(getApplicationContext(), LocationActivity.class));
+            startActivity(new Intent(getApplicationContext(), ReminderActivity.class));
         }
 
         login_btn.setOnClickListener(new View.OnClickListener() {
