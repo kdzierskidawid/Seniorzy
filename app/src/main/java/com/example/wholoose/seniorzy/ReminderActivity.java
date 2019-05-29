@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -57,12 +58,18 @@ public class ReminderActivity extends AppCompatActivity implements TimePickerDia
         simpleSwitch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b==true)
+                if(b)
                 {
                     mTextViewCurr=1;
                     content=eText1.getText().toString();
                     DialogFragment timePicker = new TimePickerFragment();
                     timePicker.show(getSupportFragmentManager(), "time picker");
+//                    timePicker.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
+//                        @Override
+//                        public void onDismiss(DialogInterface dialogInterface) {
+//                            simpleSwitch1.setChecked(false);
+//                        }
+//                    });
                 }
                 else
                 {
@@ -76,7 +83,7 @@ public class ReminderActivity extends AppCompatActivity implements TimePickerDia
         simpleSwitch2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b==true)
+                if(b)
                 {
                     mTextViewCurr=2;
                     content=eText2.getText().toString();
@@ -95,7 +102,7 @@ public class ReminderActivity extends AppCompatActivity implements TimePickerDia
         simpleSwitch3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b==true)
+                if(b)
                 {
                     mTextViewCurr=3;
                     content=eText3.getText().toString();
@@ -114,7 +121,7 @@ public class ReminderActivity extends AppCompatActivity implements TimePickerDia
         simpleSwitch4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b==true)
+                if(b)
                 {
                     mTextViewCurr=4;
                     content=eText4.getText().toString();
@@ -157,9 +164,11 @@ public class ReminderActivity extends AppCompatActivity implements TimePickerDia
     }
 
     private void startAlarm(Calendar c) {
+
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+        intent.putExtra("name",content);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, mTextViewCurr, intent, PendingIntent.FLAG_ONE_SHOT);
 
         if (c.before(Calendar.getInstance())) {
             c.add(Calendar.DATE, 1);
@@ -170,7 +179,7 @@ public class ReminderActivity extends AppCompatActivity implements TimePickerDia
     private void cancelAlarm() {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, mTextViewCurr, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         alarmManager.cancel(pendingIntent);
 
