@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-feature android:name="android.hardware.location.gps"/>
 
     <application
@@ -14,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainMenuActivity"></activity>
-        <activity android:name=".GraphActivity">
+        <activity android:name=".CallButtonsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,6 +26,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".LocationActivity" />
         <activity android:name=".WelcomeActivity" />
+        <activity android:name=".GraphActivity" />
 
     </application>
 
