@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -53,23 +54,55 @@ public class ReminderActivity extends AppCompatActivity implements TimePickerDia
         eText4=(EditText)findViewById(R.id.editText4);
 
 
+
+        mTextView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTextViewCurr=1;
+                content=eText1.getText().toString();
+                DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getSupportFragmentManager(), "time picker");
+            }
+        });
+
+        mTextView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTextViewCurr=2;
+                content=eText2.getText().toString();
+                DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getSupportFragmentManager(), "time picker");
+            }
+        });
+
+        mTextView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTextViewCurr=3;
+                content=eText3.getText().toString();
+                DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getSupportFragmentManager(), "time picker");
+            }
+        });
+
+        mTextView4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTextViewCurr=4;
+                content=eText4.getText().toString();
+                DialogFragment timePicker = new TimePickerFragment();
+                timePicker.show(getSupportFragmentManager(), "time picker");
+            }
+        });
         // initiate a Switch
         simpleSwitch1= (Switch) findViewById(R.id.switch1_timepicker);
+        simpleSwitch1.setClickable(false);
         simpleSwitch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b)
                 {
-                    mTextViewCurr=1;
-                    content=eText1.getText().toString();
-                    DialogFragment timePicker = new TimePickerFragment();
-                    timePicker.show(getSupportFragmentManager(), "time picker");
-/*                    timePicker.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialogInterface) {
-                            simpleSwitch1.setChecked(false);
-                        }
-                    });*/
+                    simpleSwitch1.setClickable(true);
                 }
                 else
                 {
@@ -80,15 +113,13 @@ public class ReminderActivity extends AppCompatActivity implements TimePickerDia
         });
         //switch 2
         simpleSwitch2= (Switch) findViewById(R.id.switch2_timepicker);
+        simpleSwitch2.setClickable(false);
         simpleSwitch2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b)
                 {
-                    mTextViewCurr=2;
-                    content=eText2.getText().toString();
-                    DialogFragment timePicker = new TimePickerFragment();
-                    timePicker.show(getSupportFragmentManager(), "time picker");
+                    simpleSwitch2.setClickable(true);
                 }
                 else
                 {
@@ -99,15 +130,13 @@ public class ReminderActivity extends AppCompatActivity implements TimePickerDia
         });
         //switch 3
         simpleSwitch3= (Switch) findViewById(R.id.switch3_timepicker);
+        simpleSwitch3.setClickable(false);
         simpleSwitch3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b)
                 {
-                    mTextViewCurr=3;
-                    content=eText3.getText().toString();
-                    DialogFragment timePicker = new TimePickerFragment();
-                    timePicker.show(getSupportFragmentManager(), "time picker");
+                    simpleSwitch3.setClickable(true);
                 }
                 else
                 {
@@ -118,15 +147,13 @@ public class ReminderActivity extends AppCompatActivity implements TimePickerDia
         });
         //switch 4
         simpleSwitch4= (Switch) findViewById(R.id.switch4_timepicker);
+        simpleSwitch4.setClickable(false);
         simpleSwitch4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b)
                 {
-                    mTextViewCurr=4;
-                    content=eText4.getText().toString();
-                    DialogFragment timePicker = new TimePickerFragment();
-                    timePicker.show(getSupportFragmentManager(), "time picker");
+                    simpleSwitch4.setClickable(true);
                 }
                 else
                 {
@@ -152,14 +179,26 @@ public class ReminderActivity extends AppCompatActivity implements TimePickerDia
         String timeText = "Time: ";
         timeText += DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
 
-        if(mTextViewCurr==1)
+        if(mTextViewCurr==1){
             mTextView1.setText(timeText);
-        else if(mTextViewCurr==2)
+            simpleSwitch1.setChecked(true);
+        }
+
+        else if(mTextViewCurr==2){
             mTextView2.setText(timeText);
-        else if(mTextViewCurr==3)
+            simpleSwitch2.setChecked(true);
+        }
+
+        else if(mTextViewCurr==3){
             mTextView3.setText(timeText);
-        else if(mTextViewCurr==4)
+            simpleSwitch3.setChecked(true);
+        }
+
+        else if(mTextViewCurr==4){
             mTextView4.setText(timeText);
+            simpleSwitch4.setChecked(true);
+        }
+
 
     }
 
@@ -184,12 +223,12 @@ public class ReminderActivity extends AppCompatActivity implements TimePickerDia
         alarmManager.cancel(pendingIntent);
 
         if(cancelAlarm==1)
-            mTextView1.setText("No alarm");
+            mTextView1.setText("No Alarm");
         else if(cancelAlarm==2)
-            mTextView2.setText("No alarm");
+            mTextView2.setText("No Alarm");
         else if(cancelAlarm==3)
-            mTextView3.setText("No alarm");
+            mTextView3.setText("No Alarm");
         else if(cancelAlarm==4)
-            mTextView4.setText("No alarm");
+            mTextView4.setText("No Alarm");
     }
 }
