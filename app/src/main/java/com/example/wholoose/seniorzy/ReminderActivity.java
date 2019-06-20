@@ -64,12 +64,12 @@ public class ReminderActivity extends AppCompatActivity implements TimePickerDia
                     content=eText1.getText().toString();
                     DialogFragment timePicker = new TimePickerFragment();
                     timePicker.show(getSupportFragmentManager(), "time picker");
-//                    timePicker.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
-//                        @Override
-//                        public void onDismiss(DialogInterface dialogInterface) {
-//                            simpleSwitch1.setChecked(false);
-//                        }
-//                    });
+/*                    timePicker.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialogInterface) {
+                            simpleSwitch1.setChecked(false);
+                        }
+                    });*/
                 }
                 else
                 {
