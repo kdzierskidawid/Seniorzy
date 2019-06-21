@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
@@ -13,7 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ReminderActivity" android:exported="true"/>
+        <activity android:name=".CarerMenuActivity"></activity>
+        <activity
+            android:name=".ReminderActivity"
+            android:exported="true" />
         <activity android:name=".MainMenuActivity" />
         <activity android:name=".WelcomeActivity">
             <intent-filter>
@@ -25,7 +29,8 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".LocationActivity" />
-        <receiver android:name=".AlertReceiver"/>
+
+        <receiver android:name=".AlertReceiver" />
     </application>
 
 </manifest>
