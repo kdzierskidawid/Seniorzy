@@ -1,142 +1,241 @@
 package com.example.wholoose.seniorzy;
 
+
+import android.*;
 import android.Manifest;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.DecimalFormat;
+import java.io.IOException;
+import java.util.List;
 
-public class LocationActivity extends AppCompatActivity {
+/**
+ * Created by User on 10/2/2017.
+ */
 
-    private TextView longitudeTextView;//dlugosc
-    private TextView latitudeTextView;//szergokosc
-    private TextView pleaseWaitTextView;
-    private LocationManager locationManager;
-    private LocationListener locationListener;
-    private final String LOCALIZATION_PERMISSION=Manifest.permission.ACCESS_FINE_LOCATION;
-    private final int LOCATION_REQUEST_CODE =99;
-
+public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
-            case LOCATION_REQUEST_CODE:{
-                if(ContextCompat.checkSelfPermission(this,LOCALIZATION_PERMISSION)!=PackageManager.PERMISSION_GRANTED)
-                    Toast.makeText(this, R.string.localization_no_permission_alert, Toast.LENGTH_LONG).show();
-                break;
+    public void onMapReady(GoogleMap googleMap) {
+        Toast.makeText(this, "Map is Ready", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onMapReady: map is ready");
+        mMap = googleMap;
+
+        if (mLocationPermissionsGranted) {
+            getDeviceLocation();
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
             }
+            mMap.setMyLocationEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+
         }
     }
 
-    /*
-    * Lokalizacja jest updatowana w czasie kiedy telefon się przemieszcza (metoda onLocationChanged).
-    * Należy się przemieścić żeby pierwszy raz lokalizacja się pojawiła.
-    * Pobranie od razu lokalizacji rzuca nullPointerException.
-    * */
+    private static final String TAG = "MapActivity";
+
+    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+    private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
+    private static final float DEFAULT_ZOOM = 15f;
+
+    //vars
+    private Boolean mLocationPermissionsGranted = false;
+    private GoogleMap mMap;
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    LocationManager locationManager;
+
+    //Firebase
+    private FirebaseAuth firebaseAuth;
+
+    private DatabaseReference mDatabase;
+    FirebaseUser user;
+
+    public double szerokosc, dlugosc;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_localisation);
-
-        FirebaseAuth firebaseAuth;
+        setContentView(R.layout.activity_map);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        Toast.makeText(LocationActivity.this, "Hello "+ user.getEmail(), Toast.LENGTH_LONG).show();
+        user = firebaseAuth.getCurrentUser();
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-        if(isOnline()){
-            Toast.makeText(LocationActivity.this, "internet connection", Toast.LENGTH_LONG).show();
+        if (firebaseAuth.getCurrentUser() == null) {
+            //closing this activity
+            finish();
+            //starting login activity
+            startActivity(new Intent(this, LoginActivity.class));
+        } else {
+            Toast.makeText(LocationActivity.this, "Hello " + user.getEmail(), Toast.LENGTH_LONG).show();
         }
-        else {
-            Toast.makeText(LocationActivity.this, "no internet connection", Toast.LENGTH_LONG).show();
 
+        getLocationPermission();
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
         }
 
-        longitudeTextView = findViewById(R.id.textViewLongitudeValue);
-        latitudeTextView =  findViewById(R.id.textViewLatitudeValue);
-        pleaseWaitTextView = findViewById(R.id.textViewLocationInfo);
-
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
-            turnOnLocalizationAlert();
-
-        locationListener = new LocationListener() {
+        // wrzucanie na liste moich poprzednich lokacji
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 1, new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                DecimalFormat format=new DecimalFormat("#.####");
-                longitudeTextView.setText(String.valueOf(format.format(location.getLongitude())));
-                latitudeTextView.setText(String.valueOf(format.format(location.getLatitude())));
-                pleaseWaitTextView.setText("");
+
+                szerokosc = location.getLatitude();
+
+                // pobieram dlugosc
+                dlugosc = location.getLongitude();
+                mDatabase.child("Users").child(user.getUid()).child("Latitude").setValue(szerokosc);
+                mDatabase.child("Users").child(user.getUid()).child("Longitude").setValue(dlugosc);
+                moveCamera(new LatLng(location.getLatitude(), location.getLongitude()),
+                        DEFAULT_ZOOM);
+                if (ActivityCompat.checkSelfPermission(LocationActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(LocationActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                }
+                LatLng latt = new LatLng(szerokosc, dlugosc);
+                mMap.addMarker(new MarkerOptions().position(latt)
+                        .title("Last Seen"));
             }
 
             @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) {
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
             }
 
             @Override
-            public void onProviderEnabled(String s) {
+            public void onProviderEnabled(String provider) {
+
             }
 
             @Override
-            public void onProviderDisabled(String s) {
+            public void onProviderDisabled(String provider) {
+
             }
-        };
-
-        if (ActivityCompat.checkSelfPermission(this, LOCALIZATION_PERMISSION)!= PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,new String[]{LOCALIZATION_PERMISSION}, LOCATION_REQUEST_CODE);
-            return;
-        }
-
-        //Location lastKnownLocation=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);//generates always null
-
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 1, locationListener);
+        });
     }
 
-    private void turnOnLocalizationAlert(){
-        final AlertDialog.Builder builder=new AlertDialog.Builder(this);
-        builder.setMessage("Lokalizacja jest wyłączona. Czy chcesz ją włączyć aby lokalizować seniora?")
-                .setCancelable(false)
-                .setPositiveButton("Tak", new DialogInterface.OnClickListener() {
+    private void getDeviceLocation(){
+        Log.d(TAG, "getDeviceLocation: getting the devices current location");
+
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        try{
+            if(mLocationPermissionsGranted){
+
+                final Task location = mFusedLocationProviderClient.getLastLocation();
+                location.addOnCompleteListener(new OnCompleteListener() {
                     @Override
-                    public void onClick( final DialogInterface dialogInterface, int i) {
-                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                    }
-                })
-                .setNegativeButton("Nie", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(final DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                        Toast.makeText(getApplicationContext(),R.string.localization_off_alert,Toast.LENGTH_LONG).show();
+                    public void onComplete(@NonNull Task task) {
+                        if(task.isSuccessful()){
+                            Log.d(TAG, "onComplete: found location!");
+                            Location currentLocation = (Location) task.getResult();
+
+                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
+                                    DEFAULT_ZOOM);
+                            mDatabase.child("Users").child(user.getUid()).child("Longitude").setValue(currentLocation.getLongitude());
+                            mDatabase.child("Users").child(user.getUid()).child("Latitude").setValue(currentLocation.getLatitude());
+
+                        }else{
+                            Log.d(TAG, "onComplete: current location is null");
+                            Toast.makeText(LocationActivity.this, "unable to get current location", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
-        final AlertDialog alert=builder.create();
-        alert.show();
+            }
+        }catch (SecurityException e){
+            Log.e(TAG, "getDeviceLocation: SecurityException: " + e.getMessage() );
+        }
     }
 
-    public boolean isOnline() {
-        ConnectivityManager cm =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
+    private void moveCamera(LatLng latLng, float zoom){
+        Log.d(TAG, "moveCamera: moving the camera to: lat: " + latLng.latitude + ", lng: " + latLng.longitude );
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
+
+    private void initMap(){
+        Log.d(TAG, "initMap: initializing map");
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+
+        mapFragment.getMapAsync(LocationActivity.this);
+    }
+
+    private void getLocationPermission(){
+        Log.d(TAG, "getLocationPermission: getting location permissions");
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION};
+
+        if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                    COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                mLocationPermissionsGranted = true;
+                initMap();
+            }else{
+                ActivityCompat.requestPermissions(this,
+                        permissions,
+                        LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        }else{
+            ActivityCompat.requestPermissions(this,
+                    permissions,
+                    LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.d(TAG, "onRequestPermissionsResult: called.");
+        mLocationPermissionsGranted = false;
+
+        switch(requestCode){
+            case LOCATION_PERMISSION_REQUEST_CODE:{
+                if(grantResults.length > 0){
+                    for(int i = 0; i < grantResults.length; i++){
+                        if(grantResults[i] != PackageManager.PERMISSION_GRANTED){
+                            mLocationPermissionsGranted = false;
+                            Log.d(TAG, "onRequestPermissionsResult: permission failed");
+                            return;
+                        }
+                    }
+                    Log.d(TAG, "onRequestPermissionsResult: permission granted");
+                    mLocationPermissionsGranted = true;
+                    //initialize our map
+                    initMap();
+                }
+            }
+        }
+    }
+
+
 }
