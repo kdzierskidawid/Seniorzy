@@ -54,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
         if(firebaseAuth.getCurrentUser() != null) {
             // Jesli jest juz zalogowany to otwieramy glowne menu apki
             finish();
-            startActivity(new Intent(getApplicationContext(), LocationActivity.class));
+            startActivity(new Intent(getApplicationContext(), CarerMenuActivity.class));
         }
         register_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

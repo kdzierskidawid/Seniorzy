@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">Seniorzy</string>
+    <string name="google_map_api_key">AIzaSyDmmuWsHwgSrh6e_sM1IFX2RvSN5_4yh1U</string>
     <string name="localization_off_alert">Nie zezwolono na lokalizację. Aplikacja może nie działać poprawnie!</string>
     <string name="localization_no_permission_alert">Nie zezwolono na dostęp do informacji o lokalizacji tego urządzenia.
         Aplikacja może nie działać poprawnie!</string>
+    <string name="email_address">Email address</string>
+    <string name="password">Password</string>
+    <string name="login_now">Login Now</string>
+    <string name="don_t_remember_password">Don\'t Remember password?</string>
+    <string name="dont_have_an_account">Don\'t have an account?</string>
+    <string name="sign_in_with_facebook">Sign in with Facebook</string>
+    <string name="or">or</string>
 </resources>

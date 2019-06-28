@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 finish();
-                                startActivity(new Intent(getApplicationContext(), LocationActivity.class));
+                                startActivity(new Intent(getApplicationContext(), CarerMenuActivity.class));
                             }
 
                             if (!task.isSuccessful())
