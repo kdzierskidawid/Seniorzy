@@ -18,7 +18,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private DatabaseReference UserRoleRef;
-    public String userRole="";
+    public String userRole="", userName="";
     private String current_user_id;
 
 
@@ -36,6 +36,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     userRole = dataSnapshot.child("Role").getValue().toString();
                     Log.d("Rola Usera Welcome", " Activity: " + userRole);
+                    userName = dataSnapshot.child("Firstame").getValue(String.class);
 
                 }
 

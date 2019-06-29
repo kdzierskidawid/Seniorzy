@@ -49,6 +49,14 @@ public class CarerMenuActivity extends AppCompatActivity {
             }
         });
 
+        btnAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(CarerMenuActivity.this, AccountActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void openReminders() {

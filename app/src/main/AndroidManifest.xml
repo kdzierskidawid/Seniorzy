@@ -23,7 +23,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SeniorMenuActivity"></activity>
+        <activity android:name=".AccountActivity"></activity>
+        <activity android:name=".SeniorMenuActivity" />
         <activity android:name=".GraphActivity" />
         <activity android:name=".CarerMenuActivity" />
         <activity
