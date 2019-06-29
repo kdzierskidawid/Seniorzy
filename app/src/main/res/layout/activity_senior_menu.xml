@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CarerMenuActivity">
+    tools:context=".SeniorMenuActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -24,7 +24,7 @@
         android:layout_marginTop="156dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Senior name"
+        android:text="My name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.902"
@@ -37,11 +37,11 @@
         android:layout_height="78dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="96dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.478"
+        app:layout_constraintHorizontal_bias="0.652"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
@@ -52,7 +52,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="0dp"
             android:backgroundTint="#0534EE"
-            android:text="Location of senior"
+            android:text="My location"
             android:textColor="@android:color/white" />
 
         <Button
@@ -63,7 +63,7 @@
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="0dp"
             android:backgroundTint="#0534EE"
-            android:text="Activity"
+            android:text="Mine Activity"
             android:textColor="@android:color/white" />
 
     </LinearLayout>
@@ -93,6 +93,42 @@
             android:textColor="@android:color/white" />
 
         <Button
+            android:id="@+id/button4"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="0dp"
+            android:backgroundTint="#0534EE"
+            android:text="Notes"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout7"
+        android:layout_width="wrap_content"
+        android:layout_height="78dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="132dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.652"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="0dp"
+            android:backgroundTint="#0534EE"
+            android:text="Calls"
+            android:textColor="@android:color/white" />
+
+        <Button
             android:id="@+id/button6"
             android:layout_width="150dp"
             android:layout_height="match_parent"
@@ -102,7 +138,6 @@
             android:backgroundTint="#0534EE"
             android:text="Account"
             android:textColor="@android:color/white" />
-
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

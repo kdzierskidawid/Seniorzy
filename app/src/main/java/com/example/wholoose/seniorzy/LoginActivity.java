@@ -19,14 +19,26 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
     EditText email_or_number_edittext, password_edittext;
     Button login_btn;
 
+    public String userRole="";
+
     //Firebase
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference UserRoleRef;
+
+    private String current_user_id;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +46,37 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         firebaseAuth = FirebaseAuth.getInstance();
         setup();
-
+        UserRoleRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        current_user_id = firebaseAuth.getCurrentUser().getUid();
 
         if(firebaseAuth.getCurrentUser() != null) {
-            // Jesli jest juz zalogowany to otwieramy glowne menu apki
-            finish();
-            startActivity(new Intent(getApplicationContext(), CarerMenuActivity.class));
+            UserRoleRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    userRole = dataSnapshot.child("Role").getValue().toString();
+                    Log.d("Rola Usera: ", ": " + userRole);
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                }
+            });
+
+            if(userRole.equals("Senior")){
+                System.out.println("3. Rolka konta to: " +userRole);
+                finish();
+                startActivity(new Intent(getApplicationContext(), SeniorMenuActivity.class));
+                Toast.makeText(LoginActivity.this,"Welcome Senior!",Toast.LENGTH_LONG).show();
+                System.out.println("Rolka konta to: " +userRole);
+            }
+
+            if(userRole.equals("Carer")){
+                System.out.println("4. Rolka konta to: " +userRole);
+                finish();
+                startActivity(new Intent(getApplicationContext(), CarerMenuActivity.class));
+                Toast.makeText(LoginActivity.this,"Welcome Carer!",Toast.LENGTH_LONG).show();
+            }
         }
 
         login_btn.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
     public void BackClick(View view){
-        Intent intent = new Intent(this,WelcomeActivity.class);
+        Intent intent = new Intent(this, WelcomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 
@@ -76,10 +113,19 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                finish();
-                                startActivity(new Intent(getApplicationContext(), CarerMenuActivity.class));
-                            }
+                                if(userRole.equals("Senior")){
+                                    finish();
+                                    startActivity(new Intent(getApplicationContext(), SeniorMenuActivity.class));
+                                    Toast.makeText(LoginActivity.this,"Welcome Senior!",Toast.LENGTH_LONG).show();
+                                }
 
+                                if(userRole.equals("Carer")){
+                                    finish();
+                                    startActivity(new Intent(getApplicationContext(), CarerMenuActivity.class));
+                                    Toast.makeText(LoginActivity.this,"Welcome Carer!",Toast.LENGTH_LONG).show();
+                                }
+
+                            }
                             if (!task.isSuccessful())
                             {
                                 try

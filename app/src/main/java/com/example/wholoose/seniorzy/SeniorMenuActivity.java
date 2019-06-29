@@ -6,17 +6,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class CarerMenuActivity extends AppCompatActivity {
+public class SeniorMenuActivity extends AppCompatActivity {
 
-    Button btnReminders, btnLocation, btnAccount, btnGraph;
+    Button btnReminders, btnLocation, btnCalls, btnGraph;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_carer_menu);
+        setContentView(R.layout.activity_senior_menu);
         btnLocation = findViewById(R.id.button);
         btnReminders= findViewById(R.id.button3);
-        btnAccount = findViewById(R.id.button6);
-        btnGraph = findViewById(R.id.button2);
+        btnCalls = findViewById(R.id.button5);
+        btnGraph = findViewById(R.id.button6);
 
         btnReminders.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -28,23 +28,23 @@ public class CarerMenuActivity extends AppCompatActivity {
         btnLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(CarerMenuActivity.this, MapActivity.class);
+                Intent intent= new Intent(SeniorMenuActivity.this, MapActivity.class);
                 startActivity(intent);
             }
         });
 
-       /* btnAccount.setOnClickListener(new View.OnClickListener() {
+        btnCalls.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(CarerMenuActivity.this, CallButtonsActivity.class);
+                Intent intent= new Intent(SeniorMenuActivity.this, CallButtonsActivity.class);
                 startActivity(intent);
             }
-        });*/
+        });
 
         btnGraph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(CarerMenuActivity.this, GraphActivity.class);
+                Intent intent= new Intent(SeniorMenuActivity.this, GraphActivity.class);
                 startActivity(intent);
             }
         });
