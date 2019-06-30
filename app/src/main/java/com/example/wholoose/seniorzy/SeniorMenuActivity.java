@@ -47,7 +47,7 @@ public class SeniorMenuActivity extends AppCompatActivity {
         current_user_id = firebaseAuth.getCurrentUser().getUid();
 
         if(firebaseAuth.getCurrentUser() != null) {
-            UserRoleRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
+            UserRoleRef.child(current_user_id).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     userName = dataSnapshot.child("Firstame").getValue().toString();

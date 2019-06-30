@@ -135,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
     public void checkIfLoginPossible(){
         current_user_id = firebaseAuth.getCurrentUser().getUid();
         if(firebaseAuth.getCurrentUser() != null) {
-            UserRoleRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
+            UserRoleRef.child(current_user_id).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     userRole = dataSnapshot.child("Role").getValue(String.class);

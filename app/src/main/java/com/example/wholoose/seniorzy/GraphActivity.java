@@ -17,7 +17,7 @@ import java.util.List;
 
 public class GraphActivity extends AppCompatActivity {
     //sztywno ustawiona lista imitująca odczyty z opaski
-    List<Integer> pulsePointsList = Arrays.asList(20, 35, 45, 30, 41, 40, 46, 48, 53, 56, 54, 55, 48, 50);
+    List<Integer> pulsePointsList = Arrays.asList(60, 80, 77, 65, 75, 77, 76, 73, 70, 80, 75, 73, 69, 65);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

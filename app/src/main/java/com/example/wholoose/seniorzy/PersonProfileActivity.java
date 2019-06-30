@@ -64,7 +64,7 @@ public class PersonProfileActivity extends AppCompatActivity {
 */
 
 
-        UsersRef.child(receiverUserId).addValueEventListener(new ValueEventListener() {
+        UsersRef.child(receiverUserId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists())
@@ -150,7 +150,7 @@ public class PersonProfileActivity extends AppCompatActivity {
 
     private void AcceptFriendRequest() {
 
-        FriendsRef.child(currentUser).addValueEventListener(new ValueEventListener() {
+        FriendsRef.child(currentUser).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 

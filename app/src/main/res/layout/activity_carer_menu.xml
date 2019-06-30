@@ -3,17 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CarerMenuActivity">
+    tools:context=".SeniorMenuActivity">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="103dp"
         android:layout_height="100dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="36dp"
+        android:src="@drawable/profile_avatar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars[1]" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView11"
@@ -23,7 +23,7 @@
         android:layout_marginTop="156dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Senior name"
+        android:text="My name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.902"
@@ -32,16 +32,15 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <LinearLayout
-        android:id="@+id/linearLayout7"
+        android:id="@+id/linearLayout8"
         android:layout_width="wrap_content"
-        android:layout_height="78dp"
+        android:layout_height="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="46dp"
+        android:layout_marginBottom="70dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent">
 
 
@@ -49,12 +48,14 @@
             android:id="@+id/button8"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="0dp"
             android:backgroundTint="#0534EE"
-            android:text="Search for Senior"
-            android:textColor="@android:color/white" />
+            android:drawableLeft="@drawable/care"
+            android:text="Find senior"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/button9"
@@ -64,21 +65,22 @@
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="0dp"
             android:backgroundTint="#0534EE"
+            android:drawableLeft="@drawable/ic_exit_to_app_black_24dp"
             android:text="Logout"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="78dp"
+        android:layout_height="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="8dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.652"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
@@ -89,8 +91,10 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="0dp"
             android:backgroundTint="#0534EE"
-            android:text="Location of senior"
-            android:textColor="@android:color/white" />
+            android:drawableLeft="@drawable/map"
+            android:text="Senior location"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/button2"
@@ -100,22 +104,23 @@
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="0dp"
             android:backgroundTint="#0534EE"
-            android:text="Activity"
-            android:textColor="@android:color/white" />
+            android:drawableLeft="@drawable/activity"
+            android:text="Senior activity"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="wrap_content"
-        android:layout_height="78dp"
+        android:layout_height="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="156dp"
+        android:layout_marginBottom="8dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.652"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
@@ -126,8 +131,10 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="0dp"
             android:backgroundTint="#0534EE"
+            android:drawableLeft="@drawable/reminders"
             android:text="Reminders"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/button6"
@@ -137,8 +144,10 @@
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="0dp"
             android:backgroundTint="#0534EE"
+            android:drawableLeft="@drawable/ic_account_circle_black_24dp"
             android:text="Account"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
