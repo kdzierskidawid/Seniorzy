@@ -2,7 +2,7 @@ package com.example.wholoose.seniorzy;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -28,15 +28,30 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
         firebaseAuth = FirebaseAuth.getInstance();
         UserRoleRef = FirebaseDatabase.getInstance().getReference().child("Users");
-        current_user_id = firebaseAuth.getCurrentUser().getUid();
 
         if(firebaseAuth.getCurrentUser() != null) {
+            current_user_id = firebaseAuth.getCurrentUser().getUid();
             UserRoleRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     userRole = dataSnapshot.child("Role").getValue().toString();
                     Log.d("Rola Usera Welcome", " Activity: " + userRole);
                     userName = dataSnapshot.child("Firstame").getValue(String.class);
+                    Log.d("", "" + userRole);
+                    if(userRole.equals(" Senior")){
+                                      /*  System.out.println("3. Rolka konta to: " +userRole);
+                                        finish();
+                                        startActivity(new Intent(getApplicationContext(), SeniorMenuActivity.class));*/
+                        Toast.makeText(WelcomeActivity.this,"Welcome Senior!",Toast.LENGTH_LONG).show();
+                        System.out.println("Rolka konta to: " +userRole);
+                    }
+
+                    if(userRole.equals(" Carer")){
+                        System.out.println("4. Rolka konta to: " +userRole);
+                                       /* finish();
+                                        startActivity(new Intent(getApplicationContext(), CarerMenuActivity.class));*/
+                        Toast.makeText(WelcomeActivity.this,"Welcome Carer!",Toast.LENGTH_LONG).show();
+                    }
 
                 }
 
@@ -44,21 +59,14 @@ public class WelcomeActivity extends AppCompatActivity {
                 public void onCancelled(DatabaseError error) {
                 }
             });
+
+
         }
-    }
-    public void LoginClick(View v){
-        if(userRole.equals("Senior")){
-            finish();
-            startActivity(new Intent(getApplicationContext(), SeniorMenuActivity.class));
-            Toast.makeText(WelcomeActivity.this,"Welcome Senior!",Toast.LENGTH_LONG).show();
-            System.out.println("Rolka konta to: " +userRole);
         }
 
-        if(userRole.equals("Carer")){
-            finish();
-            startActivity(new Intent(getApplicationContext(), CarerMenuActivity.class));
-            Toast.makeText(WelcomeActivity.this,"Welcome Carer!",Toast.LENGTH_LONG).show();
-        }
+    public void LoginClick(View v){
+        finish();
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
     }
     public void RegisterClick(View v){
         Intent intent = new Intent(this,RegisterActivity.class);

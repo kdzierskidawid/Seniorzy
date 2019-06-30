@@ -2,11 +2,10 @@ package com.example.wholoose.seniorzy;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +17,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText email_or_number_edittext, password_edittext;
     Button login_btn;
 
-    public String userRole="";
+    public String userRole;
 
     //Firebase
     private FirebaseAuth firebaseAuth;
@@ -44,39 +42,12 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        firebaseAuth = FirebaseAuth.getInstance();
         setup();
         UserRoleRef = FirebaseDatabase.getInstance().getReference().child("Users");
-        current_user_id = firebaseAuth.getCurrentUser().getUid();
+        firebaseAuth = FirebaseAuth.getInstance();
 
         if(firebaseAuth.getCurrentUser() != null) {
-            UserRoleRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    userRole = dataSnapshot.child("Role").getValue().toString();
-                    Log.d("Rola Usera: ", ": " + userRole);
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError error) {
-                }
-            });
-
-            if(userRole.equals("Senior")){
-                System.out.println("3. Rolka konta to: " +userRole);
-                finish();
-                startActivity(new Intent(getApplicationContext(), SeniorMenuActivity.class));
-                Toast.makeText(LoginActivity.this,"Welcome Senior!",Toast.LENGTH_LONG).show();
-                System.out.println("Rolka konta to: " +userRole);
-            }
-
-            if(userRole.equals("Carer")){
-                System.out.println("4. Rolka konta to: " +userRole);
-                finish();
-                startActivity(new Intent(getApplicationContext(), CarerMenuActivity.class));
-                Toast.makeText(LoginActivity.this,"Welcome Carer!",Toast.LENGTH_LONG).show();
-            }
+            logout();
         }
 
         login_btn.setOnClickListener(new View.OnClickListener() {
@@ -108,12 +79,14 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         else {
+            firebaseAuth = FirebaseAuth.getInstance();
             firebaseAuth.signInWithEmailAndPassword(email_string, password_string)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                if(userRole.equals("Senior")){
+                                checkIfLoginPossible();
+                                /*if(userRole.equals("Senior")){
                                     finish();
                                     startActivity(new Intent(getApplicationContext(), SeniorMenuActivity.class));
                                     Toast.makeText(LoginActivity.this,"Welcome Senior!",Toast.LENGTH_LONG).show();
@@ -123,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                                     finish();
                                     startActivity(new Intent(getApplicationContext(), CarerMenuActivity.class));
                                     Toast.makeText(LoginActivity.this,"Welcome Carer!",Toast.LENGTH_LONG).show();
-                                }
+                                }*/
 
                             }
                             if (!task.isSuccessful())
@@ -157,5 +130,42 @@ public class LoginActivity extends AppCompatActivity {
         email_or_number_edittext = (EditText) findViewById(R.id.input_email_phone);
         password_edittext = (EditText) findViewById(R.id.input_password);
         login_btn = (Button) findViewById(R.id.b_login);
+    }
+
+    public void checkIfLoginPossible(){
+        current_user_id = firebaseAuth.getCurrentUser().getUid();
+        if(firebaseAuth.getCurrentUser() != null) {
+            UserRoleRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    userRole = dataSnapshot.child("Role").getValue(String.class);
+                    Log.d("Rola Usera: ", ": " + userRole);
+
+                    if(userRole.equals("Senior")){
+                      finish();
+                      startActivity(new Intent(getApplicationContext(), SeniorMenuActivity.class));
+                        Toast.makeText(LoginActivity.this,"Welcome Senior!",Toast.LENGTH_LONG).show();
+                    }
+
+                    if(userRole.equals("Carer")){
+                        finish();
+                        startActivity(new Intent(getApplicationContext(), CarerMenuActivity.class));
+                        Toast.makeText(LoginActivity.this,"Welcome Carer!",Toast.LENGTH_LONG).show();
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                }
+            });
+
+
+        }
+    }
+    public void logout(){
+        firebaseAuth.signOut();
+        finish();
+        startActivity(new Intent(this, LoginActivity.class));
     }
 }

@@ -1,17 +1,14 @@
 package com.example.wholoose.seniorzy;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,7 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SeniorMenuActivity extends AppCompatActivity {
 
-    Button btnReminders, btnLocation, btnCalls, btnGraph, btnAccount;
+    Button btnReminders, btnLocation, btnCalls, btnGraph, btnAccount, btnFindUsers, btnLogout;
     TextView textView11;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference UserRoleRef;
@@ -35,8 +32,13 @@ public class SeniorMenuActivity extends AppCompatActivity {
         btnCalls = findViewById(R.id.button5);
         btnGraph = findViewById(R.id.button2);
         btnAccount = findViewById(R.id.button6);
+        btnFindUsers = findViewById(R.id.button8);
         textView11 = findViewById(R.id.textView11);
         firebaseAuth = FirebaseAuth.getInstance();
+        btnLogout = findViewById(R.id.button9);
+
+
+
         UserRoleRef = FirebaseDatabase.getInstance().getReference().child("Users");
         current_user_id = firebaseAuth.getCurrentUser().getUid();
 
@@ -97,6 +99,22 @@ public class SeniorMenuActivity extends AppCompatActivity {
             }
         });
 
+        btnFindUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(SeniorMenuActivity.this, FindAllUsers.class);
+                startActivity(intent);
+            }
+        });
+
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+            }
+        });
+
     }
 
     private void openReminders() {
@@ -104,5 +122,10 @@ public class SeniorMenuActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void logout(){
+        firebaseAuth.signOut();
+        finish();
+        startActivity(new Intent(this, WelcomeActivity.class));
+    }
 
 }
