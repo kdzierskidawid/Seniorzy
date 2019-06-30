@@ -109,8 +109,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                 // pobieram dlugosc
                 dlugosc = location.getLongitude();
-                mDatabase.child("Users").child(user.getUid()).child("Latitude").setValue(szerokosc);
-                mDatabase.child("Users").child(user.getUid()).child("Longitude").setValue(dlugosc);
+                /*mDatabase.child("Users").child(user.getUid()).child("Latitude").setValue(szerokosc);
+                mDatabase.child("Users").child(user.getUid()).child("Longitude").setValue(dlugosc);*/
                 moveCamera(new LatLng(location.getLatitude(), location.getLongitude()),
                         DEFAULT_ZOOM);
                 if (ActivityCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -155,8 +155,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
                                     DEFAULT_ZOOM);
-                            mDatabase.child("Users").child(user.getUid()).child("Longitude").setValue(currentLocation.getLongitude());
-                            mDatabase.child("Users").child(user.getUid()).child("Latitude").setValue(currentLocation.getLatitude());
+                            /*mDatabase.child("Users").child(user.getUid()).child("Longitude").setValue(currentLocation.getLongitude());
+                            mDatabase.child("Users").child(user.getUid()).child("Latitude").setValue(currentLocation.getLatitude());*/
 
                         }else{
                             Log.d(TAG, "onComplete: current location is null");
