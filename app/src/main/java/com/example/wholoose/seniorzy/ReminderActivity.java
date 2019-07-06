@@ -221,13 +221,24 @@ public class ReminderActivity extends AppCompatActivity implements TimePickerDia
 
         alarmManager.cancel(pendingIntent);
 
-        if(cancelAlarm==1)
+        if(cancelAlarm==1){
             mTextView1.setText("No Alarm");
-        else if(cancelAlarm==2)
+            simpleSwitch1.setClickable(false);
+        }
+        else if(cancelAlarm==2){
             mTextView2.setText("No Alarm");
-        else if(cancelAlarm==3)
+            simpleSwitch2.setClickable(false);
+        }
+
+        else if(cancelAlarm==3){
             mTextView3.setText("No Alarm");
-        else if(cancelAlarm==4)
+            simpleSwitch3.setClickable(false);
+        }
+
+        else if(cancelAlarm==4){
             mTextView4.setText("No Alarm");
+            simpleSwitch4.setClickable(false);
+        }
+
     }
 }
