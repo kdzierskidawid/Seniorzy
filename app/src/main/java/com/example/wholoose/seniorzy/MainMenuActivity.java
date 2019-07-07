@@ -26,6 +26,7 @@ public class MainMenuActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         //if the user is not logged in
         //that means current user will return null
+
         if(firebaseAuth.getCurrentUser() == null){
             //closing this activity
             finish();

@@ -17,7 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SeniorMenuActivity extends AppCompatActivity {
 
-    Button btnReminders, btnLocation, btnCalls, btnGraph, btnAccount, btnFindUsers, btnLogout;
+    Button btnReminders, btnLocation, btnCalls, btnGraph, /*btnAccount,*/ btnFindUsers, btnLogout;
     TextView textView11;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference UserRoleRef;
@@ -30,8 +30,11 @@ public class SeniorMenuActivity extends AppCompatActivity {
         btnLocation = findViewById(R.id.button);
         btnReminders= findViewById(R.id.button3);
         btnCalls = findViewById(R.id.button5);
+
         btnGraph = findViewById(R.id.button2);
+/*
         btnAccount = findViewById(R.id.button6);
+*/
         btnFindUsers = findViewById(R.id.button8);
         textView11 = findViewById(R.id.textView11);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -47,7 +50,7 @@ public class SeniorMenuActivity extends AppCompatActivity {
         current_user_id = firebaseAuth.getCurrentUser().getUid();
 
         if(firebaseAuth.getCurrentUser() != null) {
-            UserRoleRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
+            UserRoleRef.child(current_user_id).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     userName = dataSnapshot.child("Firstame").getValue().toString();
@@ -91,13 +94,13 @@ public class SeniorMenuActivity extends AppCompatActivity {
             }
         });
 
-        btnAccount.setOnClickListener(new View.OnClickListener() {
+        /*btnAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent= new Intent(SeniorMenuActivity.this, AccountActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
         btnFindUsers.setOnClickListener(new View.OnClickListener() {
             @Override

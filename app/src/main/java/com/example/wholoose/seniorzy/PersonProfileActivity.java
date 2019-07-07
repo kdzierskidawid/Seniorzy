@@ -31,7 +31,7 @@ public class PersonProfileActivity extends AppCompatActivity {
 
     private DatabaseReference FriendRequestRef, UsersRef, FriendsRef, ImageRef,isLeaderRef;
     private FirebaseAuth mAuth;
-    private String senderUserId, receiverUserId, saveCurrentDate, CAN_BE_LEADER;
+    private String senderUserId, receiverUserId, saveCurrentDate, isSenior;
     public String is_user_leader, currentUser;
     public static String CURRENT_STATE;
     private DatabaseReference myRef;
@@ -42,6 +42,7 @@ public class PersonProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person_profile);
+
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -64,7 +65,7 @@ public class PersonProfileActivity extends AppCompatActivity {
 */
 
 
-        UsersRef.child(receiverUserId).addValueEventListener(new ValueEventListener() {
+        UsersRef.child(receiverUserId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists())
@@ -86,6 +87,31 @@ public class PersonProfileActivity extends AppCompatActivity {
         });
 
 
+        UsersRef.child(currentUser).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                is_user_leader = dataSnapshot.child("Role").getValue().toString();
+
+                if(!is_user_leader.equals("Senior")){
+                    isSenior ="NO";
+/*
+                    toastMessage("Nie jestes seniorem, nie mozesz zapraszac do grupy");
+*/
+                    btn_send_invite.setText("NO ACCESS");
+                }
+
+                else{
+                    isSenior ="YES";
+                    toastMessage("Jestes seniorem, mozesz zapraszac do grupy");
+                    //btn_send_invite.setText("Invite to group");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         if(!senderUserId.equals(receiverUserId)){
             btn_send_invite.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +120,10 @@ public class PersonProfileActivity extends AppCompatActivity {
                     btn_send_invite.setEnabled(false);
 
                     if(CURRENT_STATE.equals("not_friends")) {
+                        if(isSenior.equals("YES")) {
                             SendFriendRequestToaPerson();
+                        }
+                        else toastMessage("Jako opiekun nie możesz rozpocząć relacji");
                     }
 
                     if(CURRENT_STATE.equals("request_sent")){
@@ -150,7 +179,7 @@ public class PersonProfileActivity extends AppCompatActivity {
 
     private void AcceptFriendRequest() {
 
-        FriendsRef.child(currentUser).addValueEventListener(new ValueEventListener() {
+        FriendsRef.child(currentUser).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -346,77 +375,5 @@ public class PersonProfileActivity extends AppCompatActivity {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
-    /*private void getFriendLocation(){
-        UsersRef.child(receiverUserId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                *//*String szerokosc = dataSnapshot.child("actual_position").child("latitude").getValue().toString();
-                String dlugosc = dataSnapshot.child("actual_position").child("longitude").getValue().toString();
-                Log.d("Dlugosc przyjaciela: ", "" + dlugosc);
-                Log.d("Szerokosc przyjaciela: ", "" + szerokosc);
-*//*
-                Double szerokosc_firebase = (dataSnapshot.child("latitude").getValue(Double.class));
-                Double dlugosc_firebase = (dataSnapshot.child("longitude").getValue(Double.class));
-
-                Log.d("Dlugosc kolegi: " + receiverUserId, "" + dlugosc_firebase);
-                Log.d("Szerokosc kolegi: ", "" + szerokosc_firebase);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }*/
-
-   /* private void getlocationofafriend(){
-        FriendRequestRef.child(currentUser).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                *//*String szerokosc = dataSnapshot.child("actual_position").child("latitude").getValue().toString();
-                String dlugosc = dataSnapshot.child("actual_position").child("longitude").getValue().toString();
-                Log.d("Dlugosc przyjaciela: ", "" + dlugosc);
-                Log.d("Szerokosc przyjaciela: ", "" + szerokosc);
-*//*
-                Double szerokosc__kolegi_firebase = (dataSnapshot.child("latitude").getValue(Double.class));
-                Double dlugosc__kolegi_firebase = (dataSnapshot.child("longitude").getValue(Double.class));
-
-                Log.d("Dlugosc kolegi: " + receiverUserId, "" + dlugosc__kolegi_firebase);
-                Log.d("Szerokosc kolegi: ", "" + szerokosc__kolegi_firebase);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-    }*/
-
-    /*private void get_person_image(){
-        ImageRef.child(receiverUserId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                *//*String szerokosc = dataSnapshot.child("actual_position").child("latitude").getValue().toString();
-                String dlugosc = dataSnapshot.child("actual_position").child("longitude").getValue().toString();
-                Log.d("Dlugosc przyjaciela: ", "" + dlugosc);
-                Log.d("Szerokosc przyjaciela: ", "" + szerokosc);
-*//*
-                if(dataSnapshot.exists()) {
-                    //Log.d("asd", "asd: " + dataSnapshot.child("imageUrl").getValue());
-                    String image = dataSnapshot.child("imageUrl").getValue(String.class);
-                }
-
-                else{
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }*/
 
 }

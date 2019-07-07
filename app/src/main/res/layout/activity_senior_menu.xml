@@ -34,14 +34,13 @@
     <LinearLayout
         android:id="@+id/linearLayout8"
         android:layout_width="wrap_content"
-        android:layout_height="78dp"
+        android:layout_height="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent">
 
 
@@ -49,12 +48,14 @@
             android:id="@+id/button8"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="0dp"
             android:backgroundTint="#0534EE"
+            android:drawableLeft="@drawable/care"
             android:text="Search for Carer"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/button9"
@@ -64,21 +65,22 @@
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="0dp"
             android:backgroundTint="#0534EE"
+            android:drawableLeft="@drawable/ic_exit_to_app_black_24dp"
             android:text="Logout"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="78dp"
+        android:layout_height="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="116dp"
+        android:layout_marginBottom="8dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.652"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
@@ -89,8 +91,10 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="0dp"
             android:backgroundTint="#0534EE"
+            android:drawableLeft="@drawable/map"
             android:text="My location"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/button2"
@@ -100,81 +104,63 @@
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="0dp"
             android:backgroundTint="#0534EE"
-            android:text="Mine Activity"
-            android:textColor="@android:color/white" />
+            android:drawableLeft="@drawable/activity"
+            android:text="My Activity"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout7"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="0dp"
+            android:backgroundTint="#0534EE"
+            android:drawableLeft="@drawable/call"
+            android:text="Calls"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="32dp"
+            android:backgroundTint="#0534EE"
+            android:drawableLeft="@drawable/reminders"
+            android:text="Reminders"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="wrap_content"
-        android:layout_height="78dp"
+        android:layout_height="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="112dp"
+        android:layout_marginBottom="8dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.652"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="0dp"
-            android:backgroundTint="#0534EE"
-            android:text="Reminders"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="0dp"
-            android:backgroundTint="#0534EE"
-            android:text="Notes"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout7"
-        android:layout_width="wrap_content"
-        android:layout_height="78dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="204dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="156dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="0dp"
-            android:backgroundTint="#0534EE"
-            android:text="Calls"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="0dp"
-            android:backgroundTint="#0534EE"
-            android:text="Account"
-            android:textColor="@android:color/white" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

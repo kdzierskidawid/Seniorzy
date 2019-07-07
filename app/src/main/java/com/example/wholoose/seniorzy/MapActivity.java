@@ -42,6 +42,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Log.d(TAG, "onMapReady: map is ready");
         mMap = googleMap;
 
+
         if (mLocationPermissionsGranted) {
             getDeviceLocation();
 
@@ -54,6 +55,45 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
         }
+
+
+        // wrzucanie na liste moich poprzednich lokacji
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 1, new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+               Log.e("ERROR", "HEHE " );
+             szerokosc = location.getLatitude();
+
+               // pobieram dlugosc
+                dlugosc = location.getLongitude();
+               mDatabase.child("Users").child(user.getUid()).child("Latitude").setValue(szerokosc);
+                mDatabase.child("Users").child(user.getUid()).child("Longitude").setValue(dlugosc);
+               moveCamera(new LatLng(location.getLatitude(), location.getLongitude()),
+                        DEFAULT_ZOOM);
+               if (ActivityCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+               }
+                LatLng latt = new LatLng(szerokosc, dlugosc);
+                mMap.addMarker(new MarkerOptions().position(latt)
+                       .title("Last Seen"));
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        });
+
+
     }
 
     private static final String TAG = "MapActivity";
@@ -86,60 +126,29 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         user = firebaseAuth.getCurrentUser();
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
+        getLocationPermission();
+
+        Log.e("ERROR", "HEHE 0" );
         if (firebaseAuth.getCurrentUser() == null) {
-            //closing this activity
+           // closing this activity
             finish();
-            //starting login activity
-            startActivity(new Intent(this, LoginActivity.class));
+           // starting login activity
+             startActivity(new Intent(this, LoginActivity.class));
         } else {
             Toast.makeText(MapActivity.this, "Hello " + user.getEmail(), Toast.LENGTH_LONG).show();
         }
 
-        getLocationPermission();
+        //
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
         }
 
-        // wrzucanie na liste moich poprzednich lokacji
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 1, new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-
-                szerokosc = location.getLatitude();
-
-                // pobieram dlugosc
-                dlugosc = location.getLongitude();
-                mDatabase.child("Users").child(user.getUid()).child("Latitude").setValue(szerokosc);
-                mDatabase.child("Users").child(user.getUid()).child("Longitude").setValue(dlugosc);
-                moveCamera(new LatLng(location.getLatitude(), location.getLongitude()),
-                        DEFAULT_ZOOM);
-                if (ActivityCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                }
-                LatLng latt = new LatLng(szerokosc, dlugosc);
-                mMap.addMarker(new MarkerOptions().position(latt)
-                        .title("Last Seen"));
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        });
+//
     }
 
     private void getDeviceLocation(){
         Log.d(TAG, "getDeviceLocation: getting the devices current location");
-
+        Log.e("ERROR", "HEHE 2" );
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         try{

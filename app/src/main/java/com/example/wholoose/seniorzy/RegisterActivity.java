@@ -49,6 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         setup();
         setupDatePicker();
+
         firebaseAuth = FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser() != null) {
             // Jesli jest juz zalogowany to otwieramy glowne menu apki

@@ -74,7 +74,7 @@ public class AccountActivity extends AppCompatActivity {
         int i = 1;
 
         if(firebaseAuth.getCurrentUser() != null) {
-            UserRoleRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
+            UserRoleRef.child(current_user_id).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     userRole = dataSnapshot.child("Role").getValue().toString();
