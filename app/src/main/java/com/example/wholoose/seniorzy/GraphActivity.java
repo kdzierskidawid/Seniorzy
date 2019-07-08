@@ -51,6 +51,7 @@ public class GraphActivity extends AppCompatActivity {
 
                 if(!is_user_leader.equals("Senior")){
                     isSenior ="NO";
+
                 }
 
                 else{

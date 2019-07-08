@@ -88,8 +88,9 @@ public class CarerMenuActivity extends AppCompatActivity {
                     toastMessage("Nie opiekujesz się seniorem");
                 }
                 else{
-                    Intent intent= new Intent(CarerMenuActivity.this, MapActivity.class);
-                    startActivity(intent);
+                    Intent profileintent = new Intent(CarerMenuActivity.this, MapActivity.class);
+                    profileintent.putExtra("senior_id", seniorID);
+                    startActivity(profileintent);
                 }
             }
         });
